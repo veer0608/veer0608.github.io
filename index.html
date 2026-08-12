@@ -511,7 +511,7 @@ footer a.label:hover{color:var(--accent);}
   <div class="sec-head reveal"><span class="idx">III</span><div class="orn"><span class="lz"></span></div><h2>Selected Works</h2><p class="sec-sub"><span class="gk">technē</span> — the craft, made visible in what it builds</p></div>
 
   <div class="filters reveal" id="filters">
-    <button class="filter active" data-filter="all">All <span class="c">6</span></button>
+    <button class="filter active" data-filter="all">All <span class="c">7</span></button>
     <button class="filter" data-filter="backend">Backend</button>
     <button class="filter" data-filter="data">Data</button>
     <button class="filter" data-filter="ml">ML / AI</button>
@@ -552,33 +552,45 @@ footer a.label:hover{color:var(--accent);}
       <p class="desc">A Streamlit and command-line CSV analyst built from specialized agents for profiling, insight discovery, and review. Handles ingestion for CSV and Excel with encoding fallback, delimiter detection, missing-value handling, and quality warnings — then generates structured reports covering shape, column types, correlations, group-level differences, and suggested next steps.</p>
       <div class="stack"><span class="t">Streamlit</span><span class="t">Python</span><span class="t">Pandas</span><span class="t">CLI</span></div>
       <div class="card-links">
-        <a href="https://github.com/veer0608/ai-agent-project" target="_blank" rel="noopener">
+        <a href="https://github.com/veer0608/multi-agent-data-analyst" target="_blank" rel="noopener">
           <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5a11.5 11.5 0 0 0-3.64 22.42c.58.11.79-.25.79-.56v-2c-3.2.7-3.88-1.37-3.88-1.37-.53-1.34-1.3-1.7-1.3-1.7-1.06-.72.08-.71.08-.71 1.17.08 1.79 1.2 1.79 1.2 1.04 1.79 2.73 1.27 3.4.97.1-.76.4-1.27.74-1.56-2.55-.29-5.23-1.28-5.23-5.7 0-1.26.45-2.29 1.19-3.1-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.18 1.18a11 11 0 0 1 5.8 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.84 1.19 3.1 0 4.43-2.69 5.41-5.25 5.69.41.36.78 1.06.78 2.14v3.17c0 .31.21.68.8.56A11.5 11.5 0 0 0 12 .5z"/></svg>
           View source
         </a>
       </div>
     </article>
 
-    <article class="card reveal" data-cat="web">
-      <div class="card-top"><div><div class="kicker">Web app</div><h3>FinTrack AI</h3></div></div>
-      <p class="desc">A TypeScript finance-tracking application — an in-progress product exploring how to make personal financial data easier to record, categorize, and understand.</p>
-      <div class="stack"><span class="t">TypeScript</span><span class="t">Web</span></div>
+    <article class="card reveal" data-cat="ml data backend">
+      <div class="card-top"><div><div class="kicker">Retrieval · measured</div><h3>CiteRAG</h3></div></div>
+      <p class="desc">A cite-everything RAG system over messy 10-K PDFs, built against a <b>golden-set eval harness</b> rather than vibes — every change is scored before it is kept. Retrieval recall@5 went from <b>0.37 to 0.77</b> against a measured ceiling of 0.85, and the largest gains came from repairing PDF text extraction — run-together words, capital-aware segmentation — not from clever retrieval. Every answer cites the source span it came from. Embeddings and re-ranking run locally with no API key, so the retrieval numbers hold independently of whichever model writes the answer.</p>
+      <div class="stack"><span class="t">FastAPI</span><span class="t">SQLite + sqlite-vec</span><span class="t">sentence-transformers</span><span class="t">bge-reranker</span><span class="t">pdfplumber</span><span class="t">Alembic</span><span class="t">GitHub Actions</span></div>
       <div class="card-links">
-        <a href="https://github.com/veer0608/fintrack-ai" target="_blank" rel="noopener">
+        <a href="https://github.com/veer0608/citerag" target="_blank" rel="noopener">
           <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5a11.5 11.5 0 0 0-3.64 22.42c.58.11.79-.25.79-.56v-2c-3.2.7-3.88-1.37-3.88-1.37-.53-1.34-1.3-1.7-1.3-1.7-1.06-.72.08-.71.08-.71 1.17.08 1.79 1.2 1.79 1.2 1.04 1.79 2.73 1.27 3.4.97.1-.76.4-1.27.74-1.56-2.55-.29-5.23-1.28-5.23-5.7 0-1.26.45-2.29 1.19-3.1-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.18 1.18a11 11 0 0 1 5.8 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.84 1.19 3.1 0 4.43-2.69 5.41-5.25 5.69.41.36.78 1.06.78 2.14v3.17c0 .31.21.68.8.56A11.5 11.5 0 0 0 12 .5z"/></svg>
           View source
         </a>
       </div>
     </article>
 
-    <article class="card reveal" data-cat="ml">
-      <div class="card-top"><div><div class="kicker">Computer vision</div><h3>Face &amp; Eye Detection</h3></div></div>
-      <p class="desc">A computer-vision project using Python and OpenCV Haar-cascade classifiers, supporting both webcam and image-based detection for faces and eyes. Built with command-line arguments, reusable functions, and input validation to keep it easy to run and maintain.</p>
-      <div class="stack"><span class="t">Python</span><span class="t">OpenCV</span><span class="t">Haar Cascades</span></div>
+    <article class="card reveal" data-cat="data backend">
+      <div class="card-top"><div><div class="kicker">Local-first · ledger</div><h3>moneytrail</h3></div></div>
+      <p class="desc">Turns bank statements into a ledger that <b>provably adds up</b>. Most finance tools begin by categorising transactions — the wrong first step, because if the parse silently dropped a row, every total built on top of it is quietly wrong and nothing in the product will ever say so. So the first component here is a reconciliation gate, checked against arithmetic the bank already published: a <i>chain</i> check that walks the running-balance column and localises a fault to a line number, and a <i>totals</i> check that catches faults the chain cannot see, including rows lost off the end. Parses CSV, PDF, and Excel statements; the core carries <b>zero required dependencies</b> and statements never leave the machine.</p>
+      <div class="stack"><span class="t">Python</span><span class="t">pdfplumber</span><span class="t">openpyxl</span><span class="t">pytest</span><span class="t">CLI</span><span class="t">GitHub Actions</span></div>
       <div class="card-links">
-        <a href="https://github.com/veer0608" target="_blank" rel="noopener">
+        <a href="https://github.com/veer0608/moneytrail" target="_blank" rel="noopener">
           <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5a11.5 11.5 0 0 0-3.64 22.42c.58.11.79-.25.79-.56v-2c-3.2.7-3.88-1.37-3.88-1.37-.53-1.34-1.3-1.7-1.3-1.7-1.06-.72.08-.71.08-.71 1.17.08 1.79 1.2 1.79 1.2 1.04 1.79 2.73 1.27 3.4.97.1-.76.4-1.27.74-1.56-2.55-.29-5.23-1.28-5.23-5.7 0-1.26.45-2.29 1.19-3.1-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.18 1.18a11 11 0 0 1 5.8 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.84 1.19 3.1 0 4.43-2.69 5.41-5.25 5.69.41.36.78 1.06.78 2.14v3.17c0 .31.21.68.8.56A11.5 11.5 0 0 0 12 .5z"/></svg>
-          GitHub profile
+          View source
+        </a>
+      </div>
+    </article>
+
+    <article class="card reveal" data-cat="ml backend">
+      <div class="card-top"><div><div class="kicker">Agentic · gated actions</div><h3>AgentOps</h3></div></div>
+      <p class="desc">An AI support engineer that can take real actions on a user's behalf, but only from behind a <b>policy and escalation gate</b> — the model proposes, the gate decides, and anything outside policy escalates to a human instead of being attempted. The LLM sits behind a provider-agnostic seam (Anthropic, OpenAI, Google) with a LangGraph runner implementing the same interface, so orchestration can be swapped without touching the tools. Ships with an eval harness that scores tool selection, task success, escalation correctness, grounding, cost, and latency.</p>
+      <div class="stack"><span class="t">FastAPI</span><span class="t">LangGraph</span><span class="t">Anthropic</span><span class="t">OpenAI</span><span class="t">SQLAlchemy</span><span class="t">Alembic</span><span class="t">structlog</span></div>
+      <div class="card-links">
+        <a href="https://github.com/veer0608/agentops" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5a11.5 11.5 0 0 0-3.64 22.42c.58.11.79-.25.79-.56v-2c-3.2.7-3.88-1.37-3.88-1.37-.53-1.34-1.3-1.7-1.3-1.7-1.06-.72.08-.71.08-.71 1.17.08 1.79 1.2 1.79 1.2 1.04 1.79 2.73 1.27 3.4.97.1-.76.4-1.27.74-1.56-2.55-.29-5.23-1.28-5.23-5.7 0-1.26.45-2.29 1.19-3.1-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.18 1.18a11 11 0 0 1 5.8 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.84 1.19 3.1 0 4.43-2.69 5.41-5.25 5.69.41.36.78 1.06.78 2.14v3.17c0 .31.21.68.8.56A11.5 11.5 0 0 0 12 .5z"/></svg>
+          View source
         </a>
       </div>
     </article>
