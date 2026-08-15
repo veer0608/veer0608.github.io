@@ -3,8 +3,28 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Veer Arora — Backend &amp; Data Engineer</title>
-<meta name="description" content="Veer Arora — Computer Science &amp; Design graduate who builds and tests data and backend systems end to end. Python, FastAPI, PostgreSQL, MLOps." />
+<title>Veer Arora — Backend, Data &amp; AI Engineer</title>
+<meta name="description" content="Veer Arora — Computer Science &amp; Design graduate who builds and tests backend and AI systems end to end. LLM agents behind policy gates, retrieval scored against golden sets, and a multi-tenant platform whose access control is enforced in the database. Python, FastAPI, PostgreSQL, MLOps." />
+<link rel="canonical" href="https://veer0608.github.io/" />
+
+<!-- icons -->
+<link rel="icon" href="favicon.svg" type="image/svg+xml" />
+<link rel="apple-touch-icon" href="apple-touch-icon.png" />
+
+<!-- social preview -->
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Veer Arora" />
+<meta property="og:url" content="https://veer0608.github.io/" />
+<meta property="og:title" content="Veer Arora — Backend, Data &amp; AI Engineer" />
+<meta property="og:description" content="LLM agents behind policy gates, retrieval scored against golden sets, and a multi-tenant platform whose access control is enforced in the database, not the application code." />
+<meta property="og:image" content="https://veer0608.github.io/og.png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content="Veer Arora — Backend, Data and AI Systems" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Veer Arora — Backend, Data &amp; AI Engineer" />
+<meta name="twitter:description" content="LLM agents behind policy gates, retrieval scored against golden sets, and a multi-tenant platform whose access control is enforced in the database, not the application code." />
+<meta name="twitter:image" content="https://veer0608.github.io/og.png" />
 
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -397,9 +417,9 @@ footer a.label:hover{color:var(--accent);}
     </div>
     <h1 class="hero-title">Veer<span class="amp">Arora</span></h1>
     <p class="hero-role"><span class="dash">—</span><span id="rotator">backend systems</span></p>
-    <p class="hero-lead">I build and test <b>data &amp; backend systems</b> end to end — from
+    <p class="hero-lead">I build and test <b>backend &amp; AI systems</b> end to end — from
       production MLOps pipelines to a multi-tenant platform whose access control is
-      <b>enforced in the database</b>, not merely the application code.</p>
+      <b>enforced in the database</b>, and LLM agents I hold to a number rather than a demo.</p>
     <div class="hero-cta">
       <a class="btn btn-primary" href="#projects">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
@@ -416,7 +436,7 @@ footer a.label:hover{color:var(--accent);}
     </div>
     <div class="hero-coords">
       <span><b>Loc</b> Bengaluru, IN</span><span class="sep">·</span>
-      <span><b>Craft</b> Backend · Data · QA</span><span class="sep">·</span>
+      <span><b>Craft</b> Backend · Data · AI</span><span class="sep">·</span>
       <span><b>Edu</b> B.Tech CS &amp; Design '26</span>
     </div>
     <p class="hero-maxim">&ldquo;The unexamined system is not worth shipping.&rdquo;
@@ -454,10 +474,11 @@ footer a.label:hover{color:var(--accent);}
   <div class="about-grid">
     <div class="reveal">
       <p class="about-lead">A Computer Science &amp; Design graduate, comfortable across
-        <span class="hl">data analysis, backend APIs, and automated testing</span> — and drawn to correctness where it truly lives: the database.</p>
+        <span class="hl">backend APIs, LLM agents, and automated testing</span> — and drawn to correctness where it truly lives: the database, and the eval.</p>
       <div class="about-body">
         <p>Most recently I tested a production MLOps platform at L&amp;T Finance, validating eight machine-learning models end to end with Python, SQL, Google Cloud Platform, and Kubeflow before they shipped.</p>
         <p>On the build side, I ship full-stack applications with FastAPI, PostgreSQL, and React — including AgencyDesk, a multi-tenant platform where cross-tenant access is impossible even if the application code is wrong, because isolation is enforced by PostgreSQL row-level security.</p>
+        <p>Lately most of my work has been on <b>LLM systems held to a measurement</b>: an agent that takes real actions only from behind a policy gate, retrieval scored against a golden set rather than judged by eye, and a SQL agent graded on whether its query returns the same rows as the reference. Each one ships with the harness that produced its number — including, where it applies, the admission that the number isn't in yet.</p>
       </div>
     </div>
     <aside class="about-side reveal">
@@ -470,7 +491,8 @@ footer a.label:hover{color:var(--accent);}
       <h3 style="margin-top:24px;">Currently working with</h3>
       <div class="tags">
         <span class="tag">Python</span><span class="tag">FastAPI</span><span class="tag">PostgreSQL</span>
-        <span class="tag">Kubeflow</span><span class="tag">React</span><span class="tag">pytest</span>
+        <span class="tag">LangGraph</span><span class="tag">Eval harnesses</span><span class="tag">Kubeflow</span>
+        <span class="tag">React</span><span class="tag">pytest</span>
       </div>
     </aside>
   </div>
@@ -637,13 +659,15 @@ footer a.label:hover{color:var(--accent);}
       <li>Python</li><li>SQL</li><li>Pandas</li><li>NumPy</li><li>Data cleaning</li><li>Data validation</li><li>EDA</li></ul></div>
     <div class="skill-card reveal"><h3><span class="no">II</span> Backend &amp; Web</h3><ul>
       <li>FastAPI</li><li>PostgreSQL</li><li>Row-Level Security</li><li>SQLAlchemy</li><li>REST APIs</li><li>React</li><li>TypeScript</li><li>Docker</li><li>pytest</li><li>Git</li><li>CI/CD</li></ul></div>
-    <div class="skill-card reveal"><h3><span class="no">III</span> Cloud &amp; MLOps</h3><ul>
+    <div class="skill-card reveal"><h3><span class="no">III</span> AI &amp; LLM Systems</h3><ul>
+      <li>LLM tool-calling agents</li><li>Evaluation harnesses</li><li>Golden-set eval</li><li>RAG &amp; retrieval</li><li>Re-ranking</li><li>LangGraph</li><li>Policy &amp; escalation gates</li><li>Cost / latency tracking</li><li>OpenAI · Anthropic · Gemini APIs</li></ul></div>
+    <div class="skill-card reveal"><h3><span class="no">IV</span> Cloud &amp; MLOps</h3><ul>
       <li>Google Cloud Platform</li><li>Kubeflow</li><li>Pipeline testing</li><li>UAT</li></ul></div>
-    <div class="skill-card reveal"><h3><span class="no">IV</span> Analytics &amp; ML</h3><ul>
+    <div class="skill-card reveal"><h3><span class="no">V</span> Analytics &amp; ML</h3><ul>
       <li>scikit-learn</li><li>Correlation analysis</li><li>Descriptive statistics</li><li>Outlier detection</li><li>Anomaly detection</li></ul></div>
-    <div class="skill-card reveal"><h3><span class="no">V</span> Visualization</h3><ul>
+    <div class="skill-card reveal"><h3><span class="no">VI</span> Visualization</h3><ul>
       <li>Power BI</li><li>Matplotlib</li><li>Seaborn</li><li>PDF report generation</li></ul></div>
-    <div class="skill-card reveal"><h3><span class="no">VI</span> Apps &amp; Tools</h3><ul>
+    <div class="skill-card reveal"><h3><span class="no">VII</span> Apps &amp; Tools</h3><ul>
       <li>Streamlit</li><li>SQLite</li><li>n8n</li><li>OpenCV</li><li>MS Excel</li><li>MS Office</li></ul></div>
   </div>
 </section>
@@ -709,7 +733,7 @@ footer a.label:hover{color:var(--accent);}
     <div class="contact-inner">
       <div class="sec-head reveal" style="margin-bottom:22px;"><span class="idx">VI</span><div class="orn"><span class="lz"></span></div><p class="sec-sub" style="text-align:center;"><span class="gk">koinōnía</span> — good work is made in fellowship</p></div>
       <h2 class="reveal">Let us <span class="em">build.</span></h2>
-      <p class="reveal">I'm open to backend, data, and QA roles — and happy to relocate. The surest way to reach me is by email.</p>
+      <p class="reveal">I'm open to backend, data, AI-engineering, and QA roles — and happy to relocate. The surest way to reach me is by email.</p>
       <div class="contact-links reveal">
         <a class="btn btn-primary" href="mailto:veerarora06@gmail.com">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 6-10 7L2 6"/></svg>
@@ -799,7 +823,7 @@ footer a.label:hover{color:var(--accent);}
 (function(){
   var el=document.getElementById('rotator');
   if(!el || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-  var roles=['backend systems','data pipelines','automated testing','FastAPI · PostgreSQL','MLOps validation'];
+  var roles=['backend systems','LLM agents','evaluation harnesses','data pipelines','automated testing','FastAPI · PostgreSQL','MLOps validation'];
   var i=0; el.style.transition='opacity .4s ease';
   setInterval(function(){
     el.style.opacity='0';
