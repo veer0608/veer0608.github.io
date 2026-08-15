@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://veer0608.github.io/sitemap.xml
