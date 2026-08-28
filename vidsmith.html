@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>vidsmith · Veer Arora</title>
+<meta name="description" content="A markdown script in, a narrated and captioned mp4 out. Caption timings come from the speech engine rather than from transcribing its own output, so there is nothing to drift. Python, edge-tts, ffmpeg, Gemini vision." />
+<link rel="canonical" href="https://veer0608.github.io/vidsmith.html" />
+
+<link rel="icon" href="favicon.svg" type="image/svg+xml" />
+<link rel="apple-touch-icon" href="apple-touch-icon.png" />
+
+<meta property="og:type" content="article" />
+<meta property="og:site_name" content="Veer Arora" />
+<meta property="og:url" content="https://veer0608.github.io/vidsmith.html" />
+<meta property="og:title" content="vidsmith · script in, narrated video out" />
+<meta property="og:description" content="Caption timings come from the speech engine that made the audio, not from transcribing it afterwards. Nothing to drift, no model to download." />
+<meta property="og:image" content="https://veer0608.github.io/assets/vidsmith/backup-restore.jpg" />
+<meta name="twitter:card" content="summary_large_image" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;800&family=EB+Garamond:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet" />
+
+<style>
+:root{
+  --bg:#fcfbf7; --bg-2:#f7f4ea; --surface:#ffffff;
+  --border:#e8e1cf; --border-strong:#d8ccab;
+  --text:#201d14; --text-dim:#544c39; --muted:#8a7f61;
+  --accent:#a5842a; --accent-soft:#bd9a3c;
+  --gold:#c2a24a; --temple:#c0a45f; --accent-ink:#201d0f;
+  --maxw:1120px; --pad:clamp(20px,5vw,64px); --radius:3px;
+  --ease:cubic-bezier(.22,.65,.24,1);
+  --f-display:"Cinzel","Times New Roman",serif;
+  --f-body:"EB Garamond",Georgia,serif;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#141310; --bg-2:#1a1813; --surface:#1e1b15;
+    --border:#332e20; --border-strong:#483f2b;
+    --text:#f3efe2; --text-dim:#c2b791; --muted:#8f8568;
+    --accent:#d4b054; --accent-soft:#e2c168;
+    --gold:#d4b054; --temple:#9a8a5e; --accent-ink:#141310;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#141310; --bg-2:#1a1813; --surface:#1e1b15;
+  --border:#332e20; --border-strong:#483f2b;
+  --text:#f3efe2; --text-dim:#c2b791; --muted:#8f8568;
+  --accent:#d4b054; --accent-soft:#e2c168;
+  --gold:#d4b054; --temple:#9a8a5e; --accent-ink:#141310;
+}
+
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+@media (prefers-reduced-motion: reduce){ html{scroll-behavior:auto;} *{transition:none !important;} }
+body{
+  margin:0;background:var(--bg);color:var(--text);
+  font-family:var(--f-body);font-size:19px;line-height:1.65;
+  -webkit-font-smoothing:antialiased;overflow-x:hidden;
+  transition:background .5s var(--ease),color .5s var(--ease);
+}
+a{color:inherit;text-decoration:none;}
+b,strong{font-weight:600;}
+img{max-width:100%;display:block;}
+h1,h2,h3{font-family:var(--f-display);font-weight:700;line-height:1.05;text-wrap:balance;margin:0;}
+p{margin:0;}
+::selection{background:var(--accent);color:var(--accent-ink);}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px;}
+
+.wrap{max-width:var(--maxw);margin:0 auto;padding-inline:var(--pad);}
+.label{font-family:var(--f-display);font-weight:600;font-size:.72rem;letter-spacing:.28em;
+  text-transform:uppercase;color:var(--muted);}
+.orn{display:flex;align-items:center;justify-content:center;gap:14px;color:var(--gold);}
+.orn::before,.orn::after{content:"";height:1px;width:min(80px,14vw);
+  background:linear-gradient(90deg,transparent,currentColor);}
+.orn::after{background:linear-gradient(90deg,currentColor,transparent);}
+.orn .lz{width:8px;height:8px;background:currentColor;transform:rotate(45deg);flex:none;}
+
+/* nav */
+header.nav{position:sticky;top:0;z-index:50;backdrop-filter:blur(9px);
+  background:color-mix(in srgb,var(--bg) 84%,transparent);
+  border-bottom:1px solid var(--border);}
+.nav-inner{max-width:var(--maxw);margin:0 auto;padding:13px var(--pad);
+  display:flex;align-items:center;justify-content:space-between;gap:20px;}
+.brand{font-family:var(--f-display);font-weight:700;font-size:1rem;letter-spacing:.22em;
+  text-transform:uppercase;display:flex;align-items:center;gap:10px;}
+.brand .col{width:9px;height:20px;background:
+  linear-gradient(var(--gold),var(--gold)) center/1px 100% no-repeat,
+  linear-gradient(var(--gold),var(--gold)) left/1px 100% no-repeat,
+  linear-gradient(var(--gold),var(--gold)) right/1px 100% no-repeat;flex:none;opacity:.85;}
+.back{font-family:var(--f-display);font-size:.74rem;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--muted);border-bottom:1px solid transparent;padding-bottom:2px;}
+.back:hover{color:var(--accent);border-color:var(--accent);}
+
+/* hero */
+.hero{padding:clamp(48px,9vw,104px) 0 clamp(30px,5vw,56px);}
+.hero h1{font-size:clamp(2.6rem,7vw,4.6rem);letter-spacing:.02em;}
+.hero .thesis{font-size:clamp(1.12rem,2.1vw,1.42rem);color:var(--text-dim);
+  max-width:62ch;margin-top:22px;}
+.hero .label{display:block;margin-bottom:16px;}
+.meta{display:flex;flex-wrap:wrap;gap:10px;margin-top:30px;}
+.t{font-family:var(--f-display);font-size:.68rem;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--text-dim);border:1px solid var(--border-strong);border-radius:var(--radius);
+  padding:6px 11px;background:var(--surface);}
+.actions{display:flex;flex-wrap:wrap;gap:14px;margin-top:34px;}
+.btn{font-family:var(--f-display);font-size:.76rem;letter-spacing:.18em;text-transform:uppercase;
+  padding:13px 22px;border:1px solid var(--border-strong);border-radius:var(--radius);
+  display:inline-flex;align-items:center;gap:9px;transition:.25s var(--ease);}
+.btn:hover{border-color:var(--accent);color:var(--accent);}
+.btn-primary{background:var(--accent);color:var(--accent-ink);border-color:var(--accent);}
+.btn-primary:hover{background:var(--accent-soft);border-color:var(--accent-soft);color:var(--accent-ink);}
+.btn svg{width:16px;height:16px;}
+
+.frieze-band{background:var(--bg-2);border-block:1px solid var(--border);padding:9px 0;}
+.frieze{display:block;width:100%;height:28px;color:var(--gold);opacity:.75;}
+
+.block{padding:clamp(52px,8vw,92px) 0;}
+.block > .wrap > .label{display:block;margin-bottom:12px;}
+.block h2{font-size:clamp(1.7rem,3.6vw,2.5rem);margin-bottom:14px;}
+.lede{color:var(--text-dim);max-width:66ch;}
+
+/* film gallery */
+.films{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:26px;margin-top:38px;}
+.film{border:1px solid var(--border);background:var(--surface);border-radius:var(--radius);
+  overflow:hidden;display:flex;flex-direction:column;transition:.3s var(--ease);}
+.film:hover{border-color:var(--border-strong);}
+.shot{position:relative;aspect-ratio:16/9;background:var(--bg-2);overflow:hidden;}
+.shot img{width:100%;height:100%;object-fit:cover;}
+.shot iframe{position:absolute;inset:0;width:100%;height:100%;border:0;}
+.play{position:absolute;inset:0;display:grid;place-items:center;cursor:pointer;border:0;
+  background:linear-gradient(180deg,rgba(20,19,16,.05),rgba(20,19,16,.45));width:100%;padding:0;}
+.play span{width:62px;height:62px;border-radius:50%;background:color-mix(in srgb,var(--accent) 92%,transparent);
+  color:var(--accent-ink);display:grid;place-items:center;transition:.25s var(--ease);}
+.play:hover span{transform:scale(1.08);}
+.play svg{width:22px;height:22px;margin-left:3px;}
+.pending{position:absolute;inset:auto 0 0 0;background:color-mix(in srgb,var(--bg) 88%,transparent);
+  border-top:1px solid var(--border);padding:9px 14px;}
+.film-body{padding:18px 20px 20px;display:flex;flex-direction:column;gap:9px;flex:1;}
+.film-body h3{font-size:1.12rem;}
+.film-body .kicker{font-family:var(--f-display);font-size:.66rem;letter-spacing:.2em;
+  text-transform:uppercase;color:var(--accent);}
+.film-body p{font-size:.95rem;color:var(--text-dim);}
+.run{font-family:var(--f-display);font-size:.68rem;letter-spacing:.14em;color:var(--muted);
+  font-variant-numeric:tabular-nums;margin-top:auto;padding-top:6px;}
+
+/* how it works */
+.points{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:2px;
+  margin-top:38px;background:var(--border);border:1px solid var(--border);}
+.point{background:var(--bg);padding:26px 24px;}
+.point h3{font-size:1.05rem;margin-bottom:9px;}
+.point p{font-size:.95rem;color:var(--text-dim);}
+.point .n{font-family:var(--f-display);font-size:.7rem;letter-spacing:.2em;color:var(--gold);
+  display:block;margin-bottom:11px;}
+
+/* numbers */
+.stats{display:flex;flex-wrap:wrap;gap:44px;margin-top:34px;}
+.stat .num{font-family:var(--f-display);font-weight:700;font-size:clamp(2rem,4.6vw,3rem);
+  color:var(--accent);line-height:1;font-variant-numeric:tabular-nums;}
+.stat .lbl{font-size:.86rem;color:var(--muted);margin-top:8px;}
+
+pre{background:var(--bg-2);border:1px solid var(--border);border-radius:var(--radius);
+  padding:16px 18px;overflow-x:auto;font-size:.84rem;line-height:1.6;margin-top:22px;
+  font-family:ui-monospace,SFMono-Regular,Menlo,monospace;color:var(--text-dim);}
+
+footer{border-top:1px solid var(--border);padding:30px var(--pad);display:flex;
+  flex-wrap:wrap;gap:14px;justify-content:space-between;max-width:var(--maxw);margin:0 auto;}
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="nav-inner">
+    <a class="brand" href="index.html"><span class="col"></span>Veer&nbsp;Arora</a>
+    <a class="back" href="index.html#projects">← All works</a>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap">
+    <span class="label">Media pipeline · exact captions</span>
+    <h1>vidsmith</h1>
+    <p class="thesis">A markdown script goes in. A narrated, captioned, delivery-ready video
+    comes out, with an .srt, a thumbnail, and a draft title, description and chapters beside it.
+    The captions are exact because nothing ever transcribes anything.</p>
+    <div class="meta">
+      <span class="t">Python</span><span class="t">edge-tts</span><span class="t">ffmpeg</span>
+      <span class="t">Gemini vision</span><span class="t">Pexels</span><span class="t">FastAPI</span>
+    </div>
+    <div class="actions">
+      <a class="btn btn-primary" href="https://github.com/veer0608/vidsmith" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5a11.5 11.5 0 0 0-3.64 22.42c.58.11.79-.25.79-.56v-2c-3.2.7-3.88-1.37-3.88-1.37-.53-1.34-1.3-1.7-1.3-1.7-1.06-.72.08-.71.08-.71 1.17.08 1.79 1.2 1.79 1.2 1.04 1.79 2.73 1.27 3.4.97.1-.76.4-1.27.74-1.56-2.55-.29-5.23-1.28-5.23-5.7 0-1.26.45-2.29 1.19-3.1-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.18 1.18a11 11 0 0 1 5.8 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.84 1.19 3.1 0 4.43-2.69 5.41-5.25 5.69.41.36.78 1.06.78 2.14v3.17c0 .31.21.68.8.56A11.5 11.5 0 0 0 12 .5z"/></svg>
+        View source
+      </a>
+      <a class="btn" href="#films">Watch the output</a>
+    </div>
+  </div>
+</section>
+
+<div class="frieze-band">
+  <svg class="frieze" viewBox="0 0 120 24" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+    <defs><pattern id="key" width="24" height="24" patternUnits="userSpaceOnUse">
+      <path d="M2 22V6h14v10H8v-4h4" fill="none" stroke="currentColor" stroke-width="1.6"/>
+    </pattern></defs>
+    <rect width="120" height="24" fill="url(#key)"/>
+  </svg>
+</div>
+
+<section class="block" id="films">
+  <div class="wrap">
+    <span class="label">I · The output</span>
+    <h2>Four videos it made</h2>
+    <p class="lede">Written as markdown, spoken by a neural voice, cut against the speech
+    timings, and scored under the narration. Nothing here was edited by hand afterwards.</p>
+
+    <div class="films">
+      <article class="film" data-yt="">
+        <div class="shot">
+          <img src="assets/vidsmith/backup-restore.jpg" alt="Thumbnail: stacked hard disk drives" loading="lazy" />
+          <div class="pending"><span class="label">Not published yet</span></div>
+        </div>
+        <div class="film-body">
+          <div class="kicker">Infrastructure</div>
+          <h3>Why Your Backup Has Never Been Tested</h3>
+          <p>The difference between a backup job reporting success and a file anyone
+          has read back.</p>
+          <div class="run">0:44 · 4 scenes</div>
+        </div>
+      </article>
+
+      <article class="film" data-yt="">
+        <div class="shot">
+          <img src="assets/vidsmith/gil.jpg" alt="Thumbnail: needle and thread" loading="lazy" />
+          <div class="pending"><span class="label">Not published yet</span></div>
+        </div>
+        <div class="film-body">
+          <div class="kicker">Python internals</div>
+          <h3>Why Python's GIL Still Matters</h3>
+          <p>Eight cores, one interpreter lock, and why threads still help for the work
+          that is waiting rather than computing.</p>
+          <div class="run">2:19 · 8 chapters</div>
+        </div>
+      </article>
+
+      <article class="film" data-yt="">
+        <div class="shot">
+          <img src="assets/vidsmith/indexes.jpg" alt="Thumbnail: interlocking metal gears" loading="lazy" />
+          <div class="pending"><span class="label">Not published yet</span></div>
+        </div>
+        <div class="film-body">
+          <div class="kicker">Databases</div>
+          <h3>Why Database Indexes Make Queries Slower</h3>
+          <p>Every index is a write tax. The read you sped up is paid for on every insert
+          that follows.</p>
+          <div class="run">1:14 · 5 chapters</div>
+        </div>
+      </article>
+
+      <article class="film" data-yt="">
+        <div class="shot">
+          <img src="assets/vidsmith/predicate-logic.jpg" alt="Thumbnail: coloured wooden blocks" loading="lazy" />
+          <div class="pending"><span class="label">Not published yet</span></div>
+        </div>
+        <div class="film-body">
+          <div class="kicker">Foundations</div>
+          <h3>Predicate Logic Makes Computers Think</h3>
+          <p>How a sentence becomes objects and predicates, and why a database query is
+          the same shape as a logical claim.</p>
+          <div class="run">1:48 · 5 chapters</div>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<div class="frieze-band">
+  <svg class="frieze" viewBox="0 0 120 24" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+    <rect width="120" height="24" fill="url(#key)"/>
+  </svg>
+</div>
+
+<section class="block">
+  <div class="wrap">
+    <span class="label">II · How it works</span>
+    <h2>The decisions worth defending</h2>
+    <p class="lede">Most of this project is ordinary. These four are the parts that make the
+    output hold together, and each one was arrived at by measuring something rather than by
+    picking the obvious approach.</p>
+
+    <div class="points">
+      <div class="point">
+        <span class="n">i</span>
+        <h3>Captions that cannot drift</h3>
+        <p>The usual approach synthesises speech, then runs Whisper over that speech to find
+        out where the words landed. Edge's TTS already reports a word-boundary event for every
+        word it speaks, so the timings come from the engine that made the audio. Nothing to
+        transcribe, no model to download, and no error to accumulate.</p>
+      </div>
+      <div class="point">
+        <span class="n">ii</span>
+        <h3>Cuts on the sentences, not on a timer</h3>
+        <p>A single unbroken eight-second take is what makes generated video look generated.
+        Each scene is split into shots at the sentence boundaries those same word events
+        report, so the picture changes exactly where the speaker lands a full stop.</p>
+      </div>
+      <div class="point">
+        <span class="n">iii</span>
+        <h3>Footage judged on what is in frame</h3>
+        <p>Stock search ranks by popularity, so "calendar pages turning" returns a book. The
+        preview stills of the top candidates go to Gemini vision alongside the narration line
+        and are reordered by what they actually show. Clips it marks as the wrong subject are
+        never used, even if that means holding one correct shot for longer.</p>
+      </div>
+      <div class="point">
+        <span class="n">iv</span>
+        <h3>Attribution treated as a licence condition</h3>
+        <p>Pexels and Pixabay require the creator named and linked. The build records every
+        clip's creator into the credits and the description, and a pre-publish check compares
+        what the credits say against what is actually on the thumbnail. That check exists
+        because the two disagreed once, silently.</p>
+      </div>
+    </div>
+
+    <pre>script   4 scenes, ~35s estimated
+voice    en-US-AndrewNeural at +8%
+visuals  scene 0  2 shots  2.7+3.6   server room racks
+  rerank: picked #4 over the top result
+  rerank: rejected 5 of 8 as the wrong subject
+render   44.6s of picture across 10 shots, mixing and encoding
+check    delivery is consistent</pre>
+  </div>
+</section>
+
+<section class="block" style="background:var(--bg-2);border-block:1px solid var(--border);">
+  <div class="wrap">
+    <span class="label">III · Built to stay working</span>
+    <h2>Tested where it actually breaks</h2>
+    <p class="lede">The interesting failures in a media pipeline are not logic errors. They are
+    a path an encoder cannot open, a filter a build of ffmpeg does not have, and a credit that
+    silently stopped matching the image beside it.</p>
+    <div class="stats">
+      <div class="stat"><div class="num">411</div><div class="lbl">tests, encodes included</div></div>
+      <div class="stat"><div class="num">3</div><div class="lbl">platforms in CI<br/>ubuntu · windows · macos</div></div>
+      <div class="stat"><div class="num">0</div><div class="lbl">API keys required<br/>to render a video</div></div>
+    </div>
+    <p class="lede" style="margin-top:34px;">Every platform earns its place. Windows is the only
+    runner that hands ffmpeg a drive letter, which is the entire reason the path escaping exists.
+    macOS found a build of ffmpeg with no subtitle filter at all, whose error message reads
+    exactly like a quoting fault. Without a key it still renders narrated, captioned video over
+    generated cards, so nothing about the pipeline depends on a model being reachable.</p>
+  </div>
+</section>
+
+<footer>
+  <span class="label">© MMXXVI · Veer Arora</span>
+  <a class="label" href="mailto:veerarora06@gmail.com">veerarora06@gmail.com ↗</a>
+</footer>
+
+<script>
+/* Theme, matching the main page so a choice made there carries over. */
+(function(){
+  var root=document.documentElement, saved=null;
+  try{ saved=localStorage.getItem('theme'); }catch(e){}
+  if(saved){ root.setAttribute('data-theme',saved); }
+})();
+
+/* A film becomes an embed only once it has an id, so an unpublished video shows
+   its thumbnail and says so rather than offering a play button that does nothing. */
+document.querySelectorAll('.film').forEach(function(film){
+  var id=film.getAttribute('data-yt');
+  if(!id){ return; }
+  var shot=film.querySelector('.shot');
+  var pending=shot.querySelector('.pending');
+  if(pending){ pending.remove(); }
+  var btn=document.createElement('button');
+  btn.className='play';
+  btn.type='button';
+  btn.setAttribute('aria-label','Play '+film.querySelector('h3').textContent);
+  btn.innerHTML='<span><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>';
+  btn.addEventListener('click',function(){
+    var f=document.createElement('iframe');
+    f.src='https://www.youtube-nocookie.com/embed/'+id+'?autoplay=1&rel=0';
+    f.title=film.querySelector('h3').textContent;
+    f.allow='accelerometer; autoplay; encrypted-media; picture-in-picture';
+    f.allowFullscreen=true;
+    shot.textContent='';
+    shot.appendChild(f);
+  });
+  shot.appendChild(btn);
+});
+</script>
+</body>
+</html>
