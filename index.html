@@ -490,7 +490,7 @@ footer a.label:hover{color:var(--accent);}
   <div class="stats-grid">
     <div class="stat"><div class="num" data-count="8">0</div><div class="lbl">ML models validated<br/>in production MLOps</div></div>
     <div class="stat"><div class="num" data-count="2300">0<span class="suf">+</span></div><div class="lbl">automated tests written<br/>across the shipped work</div></div>
-    <div class="stat"><div class="num" data-count="12">0</div><div class="lbl">projects shipped<br/>data · backend · AI</div></div>
+    <div class="stat"><div class="num" data-count="13">0</div><div class="lbl">projects shipped<br/>data · backend · AI</div></div>
   </div>
 </section>
 
@@ -578,7 +578,7 @@ footer a.label:hover{color:var(--accent);}
   <div class="sec-head reveal"><span class="idx">III</span><div class="orn"><span class="lz"></span></div><h2>Selected Works</h2><p class="sec-sub"><span class="gk">technē</span> · the craft, made visible in what it builds</p></div>
 
   <div class="filters reveal" id="filters">
-    <button class="filter active" data-filter="all">All <span class="c">12</span></button>
+    <button class="filter active" data-filter="all">All <span class="c">13</span></button>
     <button class="filter" data-filter="backend">Backend</button>
     <button class="filter" data-filter="data">Data</button>
     <button class="filter" data-filter="ml">ML / AI</button>
@@ -599,6 +599,19 @@ footer a.label:hover{color:var(--accent);}
         <a href="https://veer0608.github.io/bhavcopy-pipeline/" target="_blank" rel="noopener">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>
           Live dashboard
+        </a>
+      </div>
+    </article>
+
+
+    <article class="card reveal" data-cat="ml data backend">
+      <div class="card-top"><div><div class="kicker">Agent · prices and filings</div><h3>market-analyst</h3></div></div>
+      <p class="desc">An agent that answers questions about Indian stocks from two tools: split-adjusted prices from bhavcopy-pipeline, and cited passages from five companies' quarterly results through CiteRAG. A router decides which tools a question needs, and the answer is built from their outputs only, so <b>every number traces to price rows and every claim to a page</b>. Asked why TCS fell after its results, it says TCS rose 6.40% over that week, and puts the reported revenue and profit next to the move without claiming one caused the other. Measured end to end, <b>21 of 23 answers pass every check</b>, with prices checked against figures computed from raw closes rather than by the code under test. A rule-based router and Gemini tie at <b>26 of 30</b> on tool choice, missing different questions. Tagging each passage with its company lifted retrieval recall@5 from <b>0.52 to 0.80</b>. Experiments that made a number worse are kept in the README and reverted, not hidden. <b>105 tests</b>, CI on GitHub Actions.</p>
+      <div class="stack"><span class="t">Python</span><span class="t">DuckDB</span><span class="t">RAG</span><span class="t">Gemini</span><span class="t">Evals</span><span class="t">pytest</span><span class="t">GitHub Actions</span></div>
+      <div class="card-links">
+        <a href="https://github.com/veer0608/market-analyst" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5a11.5 11.5 0 0 0-3.64 22.42c.58.11.79-.25.79-.56v-2c-3.2.7-3.88-1.37-3.88-1.37-.53-1.34-1.3-1.7-1.3-1.7-1.06-.72.08-.71.08-.71 1.17.08 1.79 1.2 1.79 1.2 1.04 1.79 2.73 1.27 3.4.97.1-.76.4-1.27.74-1.56-2.55-.29-5.23-1.28-5.23-5.7 0-1.26.45-2.29 1.19-3.1-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.18 1.18a11 11 0 0 1 5.8 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.84 1.19 3.1 0 4.43-2.69 5.41-5.25 5.69.41.36.78 1.06.78 2.14v3.17c0 .31.21.68.8.56A11.5 11.5 0 0 0 12 .5z"/></svg>
+          View source
         </a>
       </div>
     </article>
